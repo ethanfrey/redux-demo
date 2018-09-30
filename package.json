@@ -1,0 +1,12 @@
+{
+  "name": "redux-demo",
+  "version": "0.0.1",
+  "description": "Demo of building typesafe redux",
+  "main": "build/index.js",
+  "author": "Ethan Frey <ethanfrey@users.noreply.github.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "typesafe-actions": "^2.0.4"
+  }
+}
