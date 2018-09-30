@@ -1,22 +1,40 @@
 import { ActionType } from "typesafe-actions";
 
 import * as actions from "./actions";
-import { User } from "./state";
+import { Job, User } from "./state";
 
-type PromiseAction = ActionType<typeof actions.fetchUsers>;
+type PromiseAction = ActionType<typeof actions>;
 interface State {
+  readonly jobs: ReadonlyArray<Job>;
   readonly users: ReadonlyArray<User>;
   readonly error?: Error;
   readonly inProgress: boolean;
 }
 
-export function reducer(state: State = { users: [], inProgress: false }, action: PromiseAction): State {
+const done = (error?: Error) => ({
+  error: error,
+  inProgress: false,
+});
+
+export function reducer(
+  state: State = { jobs: [], users: [], inProgress: false },
+  action: PromiseAction,
+): State {
   switch (action.type) {
+    // separate line for each success
     case "FETCH_USERS_FULFILLED":
-      return { users: action.payload, inProgress: false };
+      return { ...state, ...done(), users: action.payload };
+    case "FETCH_JOBS_FULFILLED":
+      return { ...state, ...done(), jobs: action.payload };
+
+    // repeat for each rejected...
     case "FETCH_USERS_REJECTED":
-      return { ...state, error: action.payload, inProgress: false };
+    case "FETCH_JOBS_REJECTED":
+      return { ...state, ...done(action.payload) };
+
+    // repeat for each pending...
     case "FETCH_USERS_PENDING":
+    case "FETCH_JOBS_PENDING":
       return { ...state, inProgress: true };
   }
 }
