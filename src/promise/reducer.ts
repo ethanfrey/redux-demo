@@ -4,6 +4,8 @@ import * as actions from "./actions";
 import { Job, User } from "./state";
 
 type PromiseAction = ActionType<typeof actions>;
+// type JobAction = ActionType<typeof actions.fetchJobs>;
+
 interface State {
   readonly jobs: ReadonlyArray<Job>;
   readonly users: ReadonlyArray<User>;
@@ -33,8 +35,11 @@ export function reducer(
       return { ...state, ...done(action.payload) };
 
     // repeat for each pending...
-    case "FETCH_USERS_PENDING":
     case "FETCH_JOBS_PENDING":
       return { ...state, inProgress: true };
+
+    // or just use this for anything else since we don't care mostly....
+    default:
+      return state;
   }
 }
