@@ -1,8 +1,8 @@
 import { ActionType } from "typesafe-actions";
 
-import { ADD, TOGGLE } from "../constants";
-import { Todo } from "../state";
 import * as actions from "./actions";
+import { ADD, TOGGLE } from "./constants";
+import { Todo } from "./state";
 
 type TodosAction = ActionType<typeof actions>;
 type State = ReadonlyArray<Todo>;
